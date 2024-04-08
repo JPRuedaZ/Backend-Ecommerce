@@ -54,4 +54,25 @@ export class UsersRepository {
     async getUsers() {
         return this.users
     }
+    async getUserByEmail(email: string) {
+      return await this.users.find((user) => user.email === email);
+    }
+    async getUserById(id: number) {
+      return this.users.find((user) => user.id === id);
+  }
+  
+  async createUser(user: Users) {
+    const id = this.users.length + 1;
+    this.users = [...this.users,{id,...user}];
+    return {id,...user}
+  }
+  async updateUserById(id: number, user: Users) {
+    const index = this.users.findIndex((user) => user.id === id);
+    this.users[index] = {id,...user };
+  }
+  deleteUserById(id: number) {
+    const index = this.users.findIndex((user) => user.id === id);
+    const deleteUser =this.users.splice(index, 1);
+    return deleteUser;
+}
 }

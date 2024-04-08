@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import Products from "../../helpers/products";
 @Injectable()
-export class ProductsRepository {
+export class ProductsRepository { 
     private products : Products[] = [
         {
             id: 1,
@@ -44,7 +44,26 @@ export class ProductsRepository {
             imgUrl: 'https://example.com/reloj.jpg',
           }
     ];
-    async getProducts() {
-        return this.products
+    async getProducts(page,limit) {
+      const init = (page - 1) * limit;
+      const end = init + limit;
+        return await this.products.slice(init, end);
     }
+   async getProductById(id: number) {
+      return this.products.find((product) => product.id === id);
+  }
+  async createProduct(product: Omit<Products, "id">) {
+    const id = this.products.length + 1;
+    this.products = [...this.products,{id,...product}];
+    return {id,...product}
+  }
+  async updateProductById(id: number, product: Products) {
+   const index = this.products.findIndex((product) => product.id === id);
+   this.products[index] = {id,...product };
+  }
+  async deleteProductById(id: number) {
+    const index = this.products.findIndex((product) => product.id === id);
+    const deleteProduct =this.products.splice(index, 1);
+    return deleteProduct;
+}
 }
