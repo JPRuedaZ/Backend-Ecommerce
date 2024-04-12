@@ -11,9 +11,7 @@ export class AuthService {
     async signIn(credential: Credentials) {
        const userValidation = await this.usersRepository.getUserByEmail(credential.email);
        if(userValidation) {
-           if(userValidation.password === credential.password) {
                return userValidation;
-           }
        }
        return 'User not found';
     }

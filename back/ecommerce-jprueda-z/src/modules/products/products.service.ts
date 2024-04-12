@@ -1,24 +1,24 @@
 import { Injectable } from "@nestjs/common";
 import { ProductsRepository } from "./products.repository";
-import Products from "src/helpers/products";
+import { Product } from "src/entities/Product";
 
 @Injectable()
 export class ProductsService {
     
     constructor(private readonly productsRepository: ProductsRepository) {}
     getProducts(page,limit) {
-        return this.productsRepository.getProducts(page, limit);
+        return this.productsRepository.getproductsRepository(page, limit);
     }
-    getProductById(id: number) {
+    getProductById(id: string) {
         return this.productsRepository.getProductById(id);
     }
-    createProduct(product: Omit<Products, 'id'>) {
-        return this.productsRepository.createProduct(product);
+    createProduct() {
+        return this.productsRepository.createProduct();
     }
-    updateProductById(id: number, product: Products) {
+    updateProductById(id: string, product: Product) {
         return this.productsRepository.updateProductById(id, product);
     }
-    deleteProductById(id: number) {
+    deleteProductById(id: string) {
         return this.productsRepository.deleteProductById(id);
     }
 }

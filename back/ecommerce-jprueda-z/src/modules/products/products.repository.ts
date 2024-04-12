@@ -1,69 +1,58 @@
 import { Injectable } from "@nestjs/common";
-import Products from "../../helpers/products";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Product } from "src/entities/Product";
+import { Repository } from "typeorm";
+import * as data from '../../utils/data.json';
+import { Category } from 'src/entities/Category';
+
 @Injectable()
 export class ProductsRepository { 
-    private products : Products[] = [
-        {
-            id: 1,
-            name: 'Camisa de algodón',
-            description: 'Camisa de manga larga de algodón suave y cómoda.',
-            price: 29.99,
-            stock: true,
-            imgUrl: 'https://example.com/camisa1.jpg',
-          },
-          {
-            id: 2,
-            name: 'Pantalones vaqueros',
-            description: 'Pantalones vaqueros clásicos con un ajuste cómodo.',
-            price: 39.99,
-            stock: true,
-            imgUrl: 'https://example.com/pantalones.jpg',
-          },
-          {
-            id: 3,
-            name: 'Zapatos deportivos',
-            description: 'Zapatos deportivos ligeros y transpirables para correr.',
-            price: 49.99,
-            stock: false,
-            imgUrl: 'https://example.com/zapatos.jpg',
-          },
-          {
-            id: 4,
-            name: 'Bolso de cuero',
-            description: 'Bolso de cuero elegante y duradero con múltiples compartimentos.',
-            price: 79.99,
-            stock: true,
-            imgUrl: 'https://example.com/bolso.jpg',
-          },
-          {
-            id: 5,
-            name: 'Reloj de pulsera',
-            description: 'Reloj de pulsera analógico con correa de acero inoxidable.',
-            price: 99.99,
-            stock: true,
-            imgUrl: 'https://example.com/reloj.jpg',
-          }
-    ];
-    async getProducts(page,limit) {
+    constructor( @InjectRepository(Product)private productsRepository: Repository<Product>,
+  @InjectRepository(Category) private categoryRepository: Repository<Category> ) {}
+    async getproductsRepository(page,limit) {
+      let products = await this.productsRepository.find({
+        relations: {
+          category: true,
+        },
+      });
+      products = products.filter((product) => product.stock !== 0);
       const init = (page - 1) * limit;
       const end = init + limit;
-        return await this.products.slice(init, end);
+      products = products.slice(init, end);
+      return products
     }
-   async getProductById(id: number) {
-      return this.products.find((product) => product.id === id);
+   async getProductById(id: string) {
+    const product = await this.productsRepository.findOneBy({id});
+    if(!product || product.stock === 0) throw new Error('Product not found');
+     return product;
   }
-  async createProduct(product: Omit<Products, "id">) {
-    const id = this.products.length + 1;
-    this.products = [...this.products,{id,...product}];
-    return {id,...product}
+  async createProduct() {
+    const categories = await this.categoryRepository.find();
+    data?.map(async (elem) => {
+      const category = categories.find(
+        (category)  => category.name === elem.category 
+      );
+      const product = new Product();
+      product.name = elem.name;
+      product.description = elem.description;
+      product.price = elem.price;
+      product.stock = elem.stock;
+      product.imgUrl = elem.imgUrl;
+      product.category = category;
+
+      await this.productsRepository.createQueryBuilder().insert().into(Product).values(product).orUpdate(["description", "price", "stock", "imgUrl"],["name"]).execute();
+    })
+    
+    return 'Products added successfully';
+   
   }
-  async updateProductById(id: number, product: Products) {
-   const index = this.products.findIndex((product) => product.id === id);
-   this.products[index] = {id,...product };
+  async updateProductById(id: string, product: Product) {
+   await this.productsRepository.update(id, product);
+   const updatedProduct = await this.productsRepository.findOneBy({id});
+   return updatedProduct;
   }
-  async deleteProductById(id: number) {
-    const index = this.products.findIndex((product) => product.id === id);
-    const deleteProduct =this.products.splice(index, 1);
+  async deleteProductById(id: string) {
+    const deleteProduct =this.productsRepository.delete(id);
     return deleteProduct;
 }
 }

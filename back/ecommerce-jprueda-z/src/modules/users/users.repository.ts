@@ -1,78 +1,40 @@
 import { Injectable } from "@nestjs/common";
-import Users from "src/helpers/users";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "src/entities/User";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class UsersRepository {
-    private users: Users[] = [
-        {
-            id: 1,
-            email: 'user1@example.com',
-            name: 'Juan',
-            password: 'password123',
-            address: '123 Main Street',
-            phone: '1234567890',
-          },
-          {
-            id: 2,
-            email: 'user2@example.com',
-            name: 'María',
-            password: 'password456',
-            address: '456 Elm Street',
-            phone: '9876543210',
-            country: 'Spain',
-            city: 'Madrid',
-          },
-          {
-            id: 3,
-            email: 'user3@example.com',
-            name: 'Pedro',
-            password: 'password789',
-            address: '789 Oak Street',
-            phone: '5555555555',
-            country: 'Mexico',
-          },
-          {
-            id: 4,
-            email: 'user4@example.com',
-            name: 'Ana',
-            password: 'passwordabc',
-            address: '101 Pine Street',
-            phone: '1111111111',
-            country: 'USA',
-            city: 'New York', 
-          },
-          {
-            id: 5,
-            email: 'user5@example.com',
-            name: 'Luisa',
-            password: 'passwordxyz',
-            address: '202 Cedar Street',
-            phone: '9999999999',
-            country: 'Canada',
-          }
-    ];
-    async getUsers() {
-        return this.users
+    constructor(@InjectRepository(User) private usersRepository: Repository<User>) {}
+    async getUsers(page: number, limit: number) {
+      let users = await this.usersRepository.find();
+
+      const init = (page - 1) * limit;
+      const end = init + limit;
+      users= users.slice(init, end);
+        return users;
+        
     }
     async getUserByEmail(email: string) {
-      return await this.users.find((user) => user.email === email);
+      return await this.usersRepository.find({where: {email: email}});
     }
-    async getUserById(id: number) {
-      return this.users.find((user) => user.id === id);
+    async getUserById(id: string) {
+     const user = await this.usersRepository.find({where: {id: id}, relations: {orders: true}});
+     if(!user) throw new Error('User not found');
+     return user;
   }
   
-  async createUser(user: Users) {
-    const id = this.users.length + 1;
-    this.users = [...this.users,{id,...user}];
-    return {id,...user}
+  async createUser(user: User): Promise<User> {
+    const newUser = await this.usersRepository.save(user);
+    return newUser;
   }
-  async updateUserById(id: number, user: Users) {
-    const index = this.users.findIndex((user) => user.id === id);
-    this.users[index] = {id,...user };
+  async updateUserById(id: string, user: User) {
+   const updateUser = await this.usersRepository.update({id: id}, user);
+   return updateUser;
+    
   }
-  deleteUserById(id: number) {
-    const index = this.users.findIndex((user) => user.id === id);
-    const deleteUser =this.users.splice(index, 1);
+  deleteUserById(id: string) {
+    const deleteUser = this.usersRepository.delete({id: id});
     return deleteUser;
 }
 }
