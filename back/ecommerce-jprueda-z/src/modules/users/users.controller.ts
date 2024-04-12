@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { PasswordRemoveInterceptor } from "src/interceptors/password-return.interceptor";
 import { AuthGuard } from "src/guards/auth.guard";
-import { User } from "src/entities/User";
+import { CreateUserDto } from "src/dtos/CreateUserDto.dto";
 
 @Controller('users')
 export class UsersController {
@@ -16,26 +16,26 @@ export class UsersController {
     @Get(':id')
     @UseInterceptors(PasswordRemoveInterceptor)
     @UseGuards(AuthGuard)
-    getUserbyId(@Param('id') id: string) {
+    getUserbyId(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.getUserById((id));
     }
 
     @Post()
     @UseInterceptors(PasswordRemoveInterceptor)
-    createUser(@Body() user: User) {
+    createUser(@Body() user: CreateUserDto) {
         return this.usersService.createUser(user);
     }
 
     @Put(":id")
     @UseInterceptors(PasswordRemoveInterceptor)
     @UseGuards(AuthGuard)
-    updateUser(@Param('id') id: string, @Body() user: User) {
+    updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: CreateUserDto) {
     return this.usersService.updateUserById((id), user);
     }
     @Delete(':id')
     @UseInterceptors(PasswordRemoveInterceptor)
     @UseGuards(AuthGuard)
-    deleteUser(@Param('id') id: string) {
+    deleteUser(@Param('id',ParseUUIDPipe) id: string) {
         return this.usersService.deleteUserById((id));
     }
 }

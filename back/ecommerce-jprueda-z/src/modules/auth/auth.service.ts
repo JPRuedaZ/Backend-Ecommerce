@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import Credentials from "src/helpers/credentials";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { UsersRepository } from "../users/users.repository";
+import { LoginUserDto } from "src/dtos/LoginUserDto.dto";
 
 @Injectable()
 export class AuthService {
@@ -8,11 +8,12 @@ export class AuthService {
     getAuth() {
         return 'You are Authenticated!';
     }
-    async signIn(credential: Credentials) {
-       const userValidation = await this.usersRepository.getUserByEmail(credential.email);
-       if(userValidation) {
-               return userValidation;
-       }
-       return 'User not found';
+    async signIn(credential: LoginUserDto) {
+        const {email, password} = credential;
+        if(!email || !password) {
+            throw new BadRequestException('Email and password are required');
+        }
+       const userValidation = await this.usersRepository.getUserByEmail(email, password);
+       return userValidation;
     }
 }

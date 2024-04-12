@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { Order } from 'src/entities/Order';
 import { OrderDetail } from 'src/entities/OrderDetail';
 import { User } from 'src/entities/User';
 import { Product } from 'src/entities/Product';
+
 
 @Injectable()
 export class OrdersService {
@@ -19,7 +20,7 @@ export class OrdersService {
         @InjectRepository(Product)
         private readonly productsRepository: Repository<Product>
     ) {}
-    async createOrder (userId: string, products: any) {
+    async createOrder (userId: string, products: Partial<Product>[]) { 
         let total = 0;
         const user = await this.usersRepository.findOneBy({id: userId});
         if(!user) throw new Error('User not found');
@@ -52,7 +53,7 @@ export class OrdersService {
 
     getOrders(id: string) {
         const order = this.ordersRepository.findOne( { where: { id: id }, relations: { user: true, orderDetails: true } } );
-        if(!order) throw new Error('Order not found');
+        if(!order) throw new NotFoundException('Order not found');
         return order
     }
         

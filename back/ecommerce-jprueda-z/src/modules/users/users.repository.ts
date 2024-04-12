@@ -1,5 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { CreateUserDto } from "src/dtos/CreateUserDto.dto";
 import { User } from "src/entities/User";
 import { Repository } from "typeorm";
 
@@ -15,22 +16,31 @@ export class UsersRepository {
         return users;
         
     }
-    async getUserByEmail(email: string) {
-      return await this.usersRepository.find({where: {email: email}});
+    async getUserByEmail(email: string, password: string) {
+      const userEmailFound = await this.usersRepository.findOne({where: {email: email, password: password}});
+      if(!userEmailFound) throw new NotFoundException(`User not found`);
+      return userEmailFound;
     }
     async getUserById(id: string) {
-     const user = await this.usersRepository.find({where: {id: id}, relations: {orders: true}});
-     if(!user) throw new Error('User not found');
+     const user = await this.usersRepository.findOne({where: {id: id}, relations: {orders: true}});
+     if(!user ) throw new NotFoundException(`User with ID: ${id} not found`);
      return user;
   }
   
-  async createUser(user: User): Promise<User> {
+  async createUser(user: CreateUserDto): Promise<string> {
+    const userFound = await this.usersRepository.findOneBy({email: user.email});
+    if(userFound) throw new BadRequestException(`User already exists`);
     const newUser = await this.usersRepository.save(user);
-    return newUser;
+    return newUser.id;
   }
-  async updateUserById(id: string, user: User) {
-   const updateUser = await this.usersRepository.update({id: id}, user);
-   return updateUser;
+  async updateUserById(id: string, user: CreateUserDto) {
+    const userFound = await this.usersRepository.findOneBy({id: id});
+    if(userFound) {
+      return await this.usersRepository.update({id: id}, user);
+    } else {
+      throw new NotFoundException(`User with ID: ${id} not exists`);
+    }
+
     
   }
   deleteUserById(id: string) {
