@@ -9,6 +9,7 @@ import typeOrmConfig from './config/typeorm'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { FileUploadModule } from './modules/file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { OrdersModule } from './modules/orders/orders.module';
       inject: [ConfigService],
       useFactory: (ConfigService: ConfigService) => ConfigService.get('typeorm'),
     })
-    ,UsersModule,ProductsModule,AuthModule,CategoriesModule,OrdersModule],
+    ,UsersModule,ProductsModule,AuthModule,CategoriesModule,OrdersModule, FileUploadModule],
   controllers: [AppController],
   providers: [AppService],
 })
