@@ -1,4 +1,4 @@
-import { Controller, FileTypeValidator, MaxFileSizeValidator, Param, ParseFilePipe, ParseUUIDPipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, FileTypeValidator, InternalServerErrorException, MaxFileSizeValidator, Param, ParseFilePipe, ParseUUIDPipe, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileUploadService } from './file-upload.service';
 
@@ -7,7 +7,7 @@ export class FileUploadController {
     constructor(
         private readonly fileUploadService: FileUploadService
     ) {}
-    @Post('uploadImage/:id')
+    @Put('uploadImage/:id')
     @UseInterceptors(FileInterceptor('image'))
    uploadImage( @Param('id', ParseUUIDPipe) id: string,@UploadedFile (
     new ParseFilePipe({
@@ -22,6 +22,7 @@ export class FileUploadController {
         ]
     })
    ) file: Express.Multer.File) {
+    if(!file) throw new InternalServerErrorException('Error in uploading image');
     return this.fileUploadService.uploadImage(file,id)
   }
 }
