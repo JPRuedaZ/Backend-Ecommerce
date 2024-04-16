@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsString, Matches, MaxLength, MinLength, Validate } from "class-validator";
+import { confirmPasswords } from "src/decorators/confirmPasswords.decorator";
 
 
 export class CreateUserDto {
@@ -21,6 +22,12 @@ export class CreateUserDto {
         message: 'La contraseña debe tener al menos una mayuscula, una minuscula, un numero y un caracter especial'
     })
     password: string;
+
+    @IsNotEmpty()
+    @Validate(confirmPasswords, ['password'])
+    confirmPassword: string;
+
+
 
     @IsNotEmpty()
     @IsString()

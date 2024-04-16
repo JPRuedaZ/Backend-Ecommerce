@@ -9,7 +9,8 @@ import typeOrmConfig from './config/typeorm'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { OrdersModule } from './modules/orders/orders.module';
-import { FileUploadModule } from './modules/file-upload/file-upload.module';
+import { FileUploadModule } from './modules/files/file-upload.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -21,7 +22,9 @@ import { FileUploadModule } from './modules/file-upload/file-upload.module';
       inject: [ConfigService],
       useFactory: (ConfigService: ConfigService) => ConfigService.get('typeorm'),
     })
-    ,UsersModule,ProductsModule,AuthModule,CategoriesModule,OrdersModule, FileUploadModule],
+    ,UsersModule,ProductsModule,AuthModule,CategoriesModule,OrdersModule, FileUploadModule,
+    JwtModule.register({global: true, signOptions: { expiresIn: '1h' }, secret: process.env.JWT_SECRET}),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
