@@ -7,16 +7,23 @@ export class PasswordRemoveInterceptor implements NestInterceptor {
             map(data => {
                 if(Array.isArray(data)) {
                   data = data.map(item => {
-                    delete item.password;
+                    this.removeSensitiveFields(item);
                     return item;
                 });
               } else {
                 if (data && typeof data === 'object') {
-                  delete data.password; 
+                  this.removeSensitiveFields(data); 
                 }
               }
               return data;
             }),
         );
       }
+      private removeSensitiveFields(data: any): void {
+        delete data.password;
+        delete data.confirmPassword;
     }
+  }
+  
+
+   

@@ -27,8 +27,13 @@ export class User {
     email: string
 
     @Column({
+        default: false,
+    })
+    isAdmin: boolean
+
+    @Column({
         type: 'varchar',
-        length: 20,
+        length: 60,
         nullable: false,
     })
     password: string

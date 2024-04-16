@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { UsersRepository } from "../users/users.repository";
-import { LoginUserDto } from "src/dtos/LoginUserDto.dto";
 import { User } from "src/entities/User";
 import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
+import { Role } from "src/utils/roles.enum";
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
     async getAuth() {
         return 'You are Authenticated!';
     }
-    async signIn(credential: LoginUserDto) {
+    async signIn(credential: Partial<User>) {
        const userValidation = await this.usersRepository.getUserByEmail(credential.email);
        if(!userValidation) {
            throw new BadRequestException('Invalid credentials');
@@ -26,6 +26,7 @@ export class AuthService {
            id: userValidation.id,
            email: userValidation.email,
            sub: userValidation.id,
+           roles:[userValidation.isAdmin ? Role.ADMIN : Role.USER],
        }
        
        const token = this.jwtService.sign(payload)
