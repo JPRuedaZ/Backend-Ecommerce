@@ -7,21 +7,23 @@ export class PasswordRemoveInterceptor implements NestInterceptor {
             map(data => {
                 if(Array.isArray(data)) {
                   data = data.map(item => {
-                    this.removeSensitiveFields(item);
+                    this.removePasswords(item);
                     return item;
                 });
               } else {
                 if (data && typeof data === 'object') {
-                  this.removeSensitiveFields(data); 
+                  this.removePasswords(data); 
                 }
               }
               return data;
             }),
         );
       }
-      private removeSensitiveFields(data: any): void {
+      //Este es un método privado que elimina los campos sensibles (password y confirmPassword) del objeto proporcionado.
+      private removePasswords(data: any): void {
         delete data.password;
         delete data.confirmPassword;
+        delete data.isAdmin;
     }
   }
   

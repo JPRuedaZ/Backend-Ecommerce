@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { Product } from "./Product";
+import { Product } from "./Product.entity";
 
 @Entity({
     name: 'categories',

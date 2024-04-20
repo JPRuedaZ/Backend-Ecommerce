@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { Category } from "./Category";
-import { OrderDetail } from "./OrderDetail";
+import { Category } from "./Category.entity";
+import { OrderDetail } from "./OrderDetail.entity";
 
 
 

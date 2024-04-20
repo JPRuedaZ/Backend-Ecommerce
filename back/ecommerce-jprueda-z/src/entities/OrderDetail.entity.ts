@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
-import { Product } from "./Product";
-import { Order } from "./Order";
+import { Product } from "./Product.entity";
+import { Order } from "./Order.entity";
 
 @Entity({
     name: 'order_details'

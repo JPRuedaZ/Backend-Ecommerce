@@ -1,11 +1,13 @@
-import { Body, Controller, Get, ParseUUIDPipe, Post, Query, UseGuards} from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseUUIDPipe, Post,UseGuards} from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 import { CreateOrderDto } from "src/dtos/CreateOrderDto.dto";
 import { AuthGuard } from "src/guards/auth.guard";
+import { ApiTags } from "@nestjs/swagger";
 
 
 
 
+@ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
 constructor(private readonly ordersService: OrdersService ) {}
@@ -19,7 +21,7 @@ createOrder(@Body() order: CreateOrderDto) {
 
 @Get(':id')
 @UseGuards(AuthGuard)
-getOrder(@Query('id', ParseUUIDPipe) id: string) {
+getOrder(@Param('id', ParseUUIDPipe) id: string) {
     return this.ordersService.getOrders(id)
 }
 }

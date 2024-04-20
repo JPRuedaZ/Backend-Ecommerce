@@ -2,7 +2,9 @@ import { Controller, FileTypeValidator, InternalServerErrorException, MaxFileSiz
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileUploadService } from './file-upload.service';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Files')
 @Controller('files')
 export class FileUploadController {
     constructor(

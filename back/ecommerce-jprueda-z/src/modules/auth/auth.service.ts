@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { UsersRepository } from "../users/users.repository";
-import { User } from "src/entities/User";
+import { User } from "src/entities/User.entity";
 import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
 import { Role } from "src/utils/roles.enum";
@@ -50,6 +50,7 @@ export class AuthService {
             password: hashedPassword,
             
         });
+
         return newUser;
         
     }

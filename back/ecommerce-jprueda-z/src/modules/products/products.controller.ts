@@ -1,22 +1,25 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards} from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { AuthGuard } from "src/guards/auth.guard";
-import { Product } from "src/entities/Product";
+import { Product } from "src/entities/Product.entity";
 import { Roles } from "src/decorators/roles.decorator";
 import { Role } from "src/utils/roles.enum";
 import { RolesGuard } from "src/guards/roles.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { CreateProductDto } from "src/dtos/CreateProductDto.dto";
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
     constructor(private productsService: ProductsService) {}
 @Get()
-getProducts(@Query('page') page=1, @Query('limit') limit=5) {
+getProducts(@Query('page') page:number=1, @Query('limit') limit:number=5) {
     return this.productsService.getProducts(Number(page), Number( limit));
 }
 
 @Get('seeder')
 addProducts() {
-    return this.productsService.createProduct();
+    return this.productsService.addProducts();
 }
 
 @Get(':id')
@@ -24,12 +27,15 @@ getProductbyId(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.getProductById(id);
 }
 
+@ApiBearerAuth()
 @Post()
-@UseGuards(AuthGuard)
-createProduct(@Body() product: Product) {
-    return this.productsService.createProduct();
+@Roles(Role.ADMIN)
+@UseGuards(AuthGuard,RolesGuard)
+createProduct(@Body() product: CreateProductDto) {
+    return this.productsService.createProduct(product);
 }
 
+@ApiBearerAuth()
 @Put(":id")
 @Roles(Role.ADMIN)
 @UseGuards(AuthGuard,RolesGuard)

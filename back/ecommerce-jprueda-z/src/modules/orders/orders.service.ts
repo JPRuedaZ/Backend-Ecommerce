@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
-import { Order } from 'src/entities/Order';
-import { OrderDetail } from 'src/entities/OrderDetail';
-import { User } from 'src/entities/User';
-import { Product } from 'src/entities/Product';
+import { Order } from 'src/entities/Order.entity';
+import { OrderDetail } from 'src/entities/OrderDetail.entity';
+import { User } from 'src/entities/User.entity';
+import { Product } from 'src/entities/Product.entity';
 
 
 @Injectable()
@@ -47,14 +47,34 @@ export class OrdersService {
 
         await this.ordersDetailsRepository.save(orderDetail);
 
-        return await this.ordersRepository.find( { where: { id: newOrder.id }, relations: { user: true, orderDetails: true } } );
+        const finalOrder = await this.ordersRepository.findOne({
+            where: { id: newOrder.id },
+            relations: ['user', 'orderDetails']
+          });
+          
+          if (finalOrder && finalOrder.user) {
+            delete finalOrder.user.password;
+            delete finalOrder.user.isAdmin;
+          }
+          
+          return finalOrder;
         
     };
 
-    getOrders(id: string) {
+    async getOrders(id: string): Promise<Order> {
         const order = this.ordersRepository.findOne( { where: { id: id }, relations: { user: true, orderDetails: true } } );
         if(!order) throw new NotFoundException('Order not found');
-        return order
+        const finalOrder = await this.ordersRepository.findOne({
+            where: { id: id },
+            relations: ['user', 'orderDetails']
+          });
+          
+          if (finalOrder && finalOrder.user) {
+            delete finalOrder.user.password;
+            delete finalOrder.user.isAdmin;
+          }
+          
+          return finalOrder;
     }
         
             
