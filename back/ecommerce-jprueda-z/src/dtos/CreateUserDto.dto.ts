@@ -14,6 +14,7 @@ export class CreateUserDto {
     name: string;
 
     /**
+     * Debe ser un email valido
      * @example 'juananto10@gmail.com'
      */
     @IsNotEmpty( { message: 'El email es requerido' } )
@@ -21,7 +22,8 @@ export class CreateUserDto {
     email: string;
 
     /**
-     * @example 'janto123*'
+     * Debe ser una contraseña debe contener al menos una mayuscula, una minuscula, un numero y un caracter especial
+     * @example 'Janto123*'
      */
     @IsNotEmpty( { message: 'La contraseña es requerida' } )
     @IsString({ message: 'La contraseña debe ser un string' })
@@ -33,13 +35,15 @@ export class CreateUserDto {
     password: string;
 
     /**
-     * @example 'janto123*'
+     * La contraseña debe ser igual a la anterior
+     * @example 'Janto123*'
      */
     @IsNotEmpty()
     @Validate(confirmPasswords, ['password'])
     confirmPassword: string;
 
     /**
+     * La direccion debe ser de 3 a 80 caracteres
      * @example '456 Elm Street'
      */
     @IsNotEmpty()
@@ -49,6 +53,7 @@ export class CreateUserDto {
     address: string;
 
     /**
+     * Debe ser un numero
      * @example '987654'
      */
     @IsNotEmpty()
@@ -56,6 +61,7 @@ export class CreateUserDto {
     phone: number;
 
     /**
+     * 
      * @example 'Colombia'
      */
     @IsNotEmpty()

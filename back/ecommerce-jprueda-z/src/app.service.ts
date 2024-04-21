@@ -12,19 +12,17 @@ export class AppService {
   }
   
   async preLoadData(): Promise<void>{
-    await Promise.all([
-    this.categoriesService.addCategories(),
-    this.productsRepository.addProducts(),
-    ])
     
+    await this.categoriesService.addCategories(),
+    await this.productsRepository.addProducts()
   }
 
   async reset(): Promise<void> {
-    await Promise.all([
-    this.productsRepository.reset(),
-    this.categoriesService.addCategories(),
-    this.productsRepository.addProducts(),
-    ]);
+    
+    await this.productsRepository.reset(),
+    await this.categoriesService.addCategories(),
+    await this.productsRepository.addProducts(),
+ 
    
   console.log('Reinicio y se agrego Preloaded data');
   

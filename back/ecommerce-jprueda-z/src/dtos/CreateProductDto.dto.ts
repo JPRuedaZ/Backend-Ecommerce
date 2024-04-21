@@ -35,6 +35,7 @@ export class CreateProductDto {
   stock: number;
 
   /**
+   * Debe ser una URL permitida
    * @example 'https://d2ihpvt6nd5q28.cloudfront.net/wp-content/uploads/2023/12/iPhone15_Pink_PDP_Image_Position-1__MXLA.jpg'
    */
   @IsNotEmpty()
@@ -42,6 +43,7 @@ export class CreateProductDto {
   imgUrl?: string;
 
   /**
+   * Debe ser una categoria permitida
    * @example 'smartphone'
    */
   @IsNotEmpty()

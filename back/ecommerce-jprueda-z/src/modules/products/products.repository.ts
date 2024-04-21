@@ -1,15 +1,17 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Product } from "src/entities/Product.entity";
 import { Repository } from "typeorm";
 import * as data from '../../utils/data.json';
 import { Category } from 'src/entities/Category.entity';
 import { CreateProductDto } from "src/dtos/CreateProductDto.dto";
+import { Order } from "src/entities/Order.entity";
 
 @Injectable()
 export class ProductsRepository { 
     constructor( @InjectRepository(Product)private productsRepository: Repository<Product>,
-  @InjectRepository(Category) private categoryRepository: Repository<Category> ) {}
+  @InjectRepository(Category) private categoryRepository: Repository<Category>,
+@InjectRepository(Order) private orderRepository: Repository<Order>) {}
     async getproductsRepository(page: number,limit: number): Promise<Product[]> {
       let products = await this.productsRepository.find({
         relations: {
@@ -96,12 +98,15 @@ export class ProductsRepository {
     return deleteProduct;
 }
 async reset(): Promise<void> {
-  const [categories, products] = await Promise.all([
-    this.categoryRepository.find(),
-    this.productsRepository.find(),
-  ]);
+  const products = await this.productsRepository.find();
+  const categories = await this.categoryRepository.find();
+  const orders = await this.orderRepository.find();
 
-  const deleteProduct = products.map((product) => this.productsRepository.delete(product));
+
+  if(orders.length > 0) {
+   throw new ConflictException('Cannot reset data. Orders exist');
+  }
+  const deleteProduct = products.map((product) =>  this.productsRepository.delete(product));
   const deleteCategory = categories.map((category) => this.categoryRepository.delete(category));
   
 

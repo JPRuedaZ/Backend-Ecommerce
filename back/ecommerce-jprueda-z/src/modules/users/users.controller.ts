@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe,Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { PasswordRemoveInterceptor } from "src/interceptors/password-return.interceptor";
 import { AuthGuard } from "src/guards/auth.guard";
@@ -20,6 +20,7 @@ export class UsersController {
     getUsers(@Query('page') page:number=1, @Query('limit') limit:number=5) {
         return this.usersService.getUsers(Number(page) , Number( limit));
     }
+    @ApiBearerAuth()
     @Get(':id')
     @UseInterceptors(PasswordRemoveInterceptor)
     @UseGuards(AuthGuard)
@@ -27,18 +28,15 @@ export class UsersController {
     return this.usersService.getUserById((id));
     }
 
-    @Post()
-    @UseInterceptors(PasswordRemoveInterceptor)
-    createUser(@Body() user: CreateUserDto) {
-        return this.usersService.createUser(user);
-    }
-
+    @ApiBearerAuth()
     @Put(":id")
     @UseInterceptors(PasswordRemoveInterceptor)
     @UseGuards(AuthGuard)
     updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: CreateUserDto) {
     return this.usersService.updateUserById((id), user);
     }
+    
+    @ApiBearerAuth()
     @Delete(':id')
     @UseInterceptors(PasswordRemoveInterceptor)
     @UseGuards(AuthGuard)

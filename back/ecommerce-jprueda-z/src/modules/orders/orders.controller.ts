@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, ParseUUIDPipe, Post,UseGuards} from "@nes
 import { OrdersService } from "./orders.service";
 import { CreateOrderDto } from "src/dtos/CreateOrderDto.dto";
 import { AuthGuard } from "src/guards/auth.guard";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 
 
@@ -12,6 +12,7 @@ import { ApiTags } from "@nestjs/swagger";
 export class OrdersController {
 constructor(private readonly ordersService: OrdersService ) {}
 
+@ApiBearerAuth()
 @Post()
 @UseGuards(AuthGuard)
 createOrder(@Body() order: CreateOrderDto) {
@@ -19,6 +20,7 @@ createOrder(@Body() order: CreateOrderDto) {
     return this.ordersService.createOrder(userId, products)
 }
 
+@ApiBearerAuth()
 @Get(':id')
 @UseGuards(AuthGuard)
 getOrder(@Param('id', ParseUUIDPipe) id: string) {

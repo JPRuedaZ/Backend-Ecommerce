@@ -42,8 +42,11 @@ createProduct(@Body() product: CreateProductDto) {
 updateProduct(@Param('id', ParseUUIDPipe) id: string, @Body() product: Product) {
 return this.productsService.updateProductById(id, product);
 }
+
+@ApiBearerAuth()
 @Delete(':id')
-@UseGuards(AuthGuard)
+@Roles(Role.ADMIN)
+@UseGuards(AuthGuard,RolesGuard)
 deleteProduct(@Param('id',ParseUUIDPipe) id: string) {
     return this.productsService.deleteProductById(id);
 }
