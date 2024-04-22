@@ -9,13 +9,21 @@ services:
       - .env
     depends_on:
       - postgresdb
+      
     
   postgresdb:
     image: postgres
     volumes:
-      - pgdata: /var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     env_file:
       - .env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    ports:
+      - "5050:80"
 
 volumes:
   pgdata:
