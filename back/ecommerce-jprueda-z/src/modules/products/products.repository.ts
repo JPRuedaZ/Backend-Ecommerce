@@ -24,7 +24,7 @@ export class ProductsRepository {
       products = products.slice(init, end);
       return products
     }
-   async getProductById(id: string) {
+   async getProductById(id: string): Promise<Product> {
     const product = await this.productsRepository.findOneBy({id});
     if(!product || product.stock === 0) throw new NotFoundException('Product not available');
      return product;
@@ -83,19 +83,16 @@ export class ProductsRepository {
     return newProduct;
 
   }
-  async updateProductById(id: string, product: Product) {
-    if(id !== product.id) {
-      throw new NotFoundException(`Product with ID: ${id} not found`);
-    } else if(id !== 'string') {
-      throw new BadRequestException(`Error in ID: ${id}`);
-    }
-   await this.productsRepository.update(id, product);
+  async updateProductById(id: string, product: Partial<Product>) : Promise<Product> {
+    const foundProduct = await this.productsRepository.findOneBy({id});
+    if(!foundProduct) throw new NotFoundException('Product not found');
+   await this.productsRepository.update(id, {...product});
    const updatedProduct = await this.productsRepository.findOneBy({id});
    return updatedProduct;
   }
-  async deleteProductById(id: string) {
-    const deleteProduct =this.productsRepository.delete(id);
-    return deleteProduct;
+  async deleteProductById(id: string): Promise<string>  {
+    await this.productsRepository.delete({ id: id });
+    return `Deleted product with ID: ${id}`;
 }
 async reset(): Promise<void> {
   const products = await this.productsRepository.find();
@@ -106,11 +103,11 @@ async reset(): Promise<void> {
   if(orders.length > 0) {
    throw new ConflictException('Cannot reset data. Orders exist');
   }
-  const deleteProduct = products.map((product) =>  this.productsRepository.delete(product));
-  const deleteCategory = categories.map((category) => this.categoryRepository.delete(category));
-  
 
-  await Promise.all([...deleteProduct,...deleteCategory,]);
+  products.map(async (product) => await this.productsRepository.remove(product)),
+  categories.map(async (category) => await this.categoryRepository.remove(category))
+ 
+  
 
   console.log('Data reset successfully');
 }

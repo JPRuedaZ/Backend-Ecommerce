@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { Order } from 'src/entities/Order.entity';
@@ -24,6 +24,12 @@ export class OrdersService {
         let total = 0;
         const user = await this.usersRepository.findOneBy({id: userId});
         if(!user) throw new Error('User not found');
+
+        const productIdSet = new Set(products.map(product => product.id));
+        if (productIdSet.size !== products.length) {
+          throw new BadRequestException('You cannot have duplicate products');
+      }
+
         const order = new Order();
         order.user = user;
         order.date = new Date();
@@ -34,6 +40,7 @@ export class OrdersService {
             const product = await this.productsRepository.findOneBy({id: elem.id, stock: MoreThan(0)});
             if(!product) throw new Error('Product not found');
             total += Number(product.price);
+        
         
         await this.productsRepository.update({id: product.id}, {stock: product.stock - 1});
         console.log(product.price);

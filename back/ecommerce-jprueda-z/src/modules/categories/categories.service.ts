@@ -10,6 +10,11 @@ export class CategoriesService {
         @InjectRepository(Category)
         private readonly categoriesRepository: Repository<Category>,
     ) {}
+
+    async getCategories(): Promise<Category[]> {
+        return await this.categoriesRepository.find();
+    }
+
     async addCategories(): Promise<string> {
         await Promise.all(
             data?.map(async (product) => {

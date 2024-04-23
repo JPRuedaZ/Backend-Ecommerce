@@ -11,19 +11,19 @@ export class ProductsService {
     getProducts(page: number,limit: number): Promise<Product[]> {
         return this.productsRepository.getproductsRepository(page, limit);
     }
-    getProductById(id: string) {
+    getProductById(id: string): Promise<Product> {
         return this.productsRepository.getProductById(id);
     }
-    addProducts() {
+    addProducts(): Promise<string> {
         return this.productsRepository.addProducts();
     }
     createProduct(product: CreateProductDto) : Promise<Product> {
         return this.productsRepository.createProduct(product);
     }
-    updateProductById(id: string, product: Product) {
+    updateProductById(id: string, product: Partial<Product>) {
         return this.productsRepository.updateProductById(id, product);
     }
-    deleteProductById(id: string) {
+    deleteProductById(id: string): Promise<string> {
         return this.productsRepository.deleteProductById(id);
     }
 }

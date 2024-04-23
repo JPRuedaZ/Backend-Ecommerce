@@ -3,6 +3,7 @@ import { Observable, map } from "rxjs";
 
 export class PasswordRemoveInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
+      //Utiliza el método pipe de RxJS permite encadenar operadores para transformar el flujo de datos observable de manera limpia y componible.
         return next.handle().pipe(
             map(data => {
                 if(Array.isArray(data)) {

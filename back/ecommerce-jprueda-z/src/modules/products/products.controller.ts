@@ -13,17 +13,17 @@ import { CreateProductDto } from "src/dtos/CreateProductDto.dto";
 export class ProductsController {
     constructor(private productsService: ProductsService) {}
 @Get()
-getProducts(@Query('page') page:number=1, @Query('limit') limit:number=5) {
+getProducts(@Query('page') page:number=1, @Query('limit') limit:number=5): Promise <Product[]> {
     return this.productsService.getProducts(Number(page), Number( limit));
 }
 
 @Get('seeder')
-addProducts() {
+addProducts(): Promise<string> {
     return this.productsService.addProducts();
 }
 
 @Get(':id')
-getProductbyId(@Param('id', ParseUUIDPipe) id: string) {
+getProductbyId(@Param('id', ParseUUIDPipe) id: string): Promise <Product> {
     return this.productsService.getProductById(id);
 }
 
@@ -31,7 +31,7 @@ getProductbyId(@Param('id', ParseUUIDPipe) id: string) {
 @Post()
 @Roles(Role.ADMIN)
 @UseGuards(AuthGuard,RolesGuard)
-createProduct(@Body() product: CreateProductDto) {
+createProduct(@Body() product: CreateProductDto): Promise <Product> {
     return this.productsService.createProduct(product);
 }
 
@@ -39,7 +39,7 @@ createProduct(@Body() product: CreateProductDto) {
 @Put(":id")
 @Roles(Role.ADMIN)
 @UseGuards(AuthGuard,RolesGuard)
-updateProduct(@Param('id', ParseUUIDPipe) id: string, @Body() product: Product) {
+updateProduct(@Param('id', ParseUUIDPipe) id: string, @Body() product: Partial<Product>): Promise <Partial<Product>> {
 return this.productsService.updateProductById(id, product);
 }
 
@@ -47,7 +47,7 @@ return this.productsService.updateProductById(id, product);
 @Delete(':id')
 @Roles(Role.ADMIN)
 @UseGuards(AuthGuard,RolesGuard)
-deleteProduct(@Param('id',ParseUUIDPipe) id: string) {
+deleteProduct(@Param('id',ParseUUIDPipe) id: string): Promise <string> {
     return this.productsService.deleteProductById(id);
 }
 }

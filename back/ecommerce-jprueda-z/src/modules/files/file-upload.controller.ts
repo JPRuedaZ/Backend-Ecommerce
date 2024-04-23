@@ -17,9 +17,10 @@ export class FileUploadController {
     @UseGuards(AuthGuard)
    uploadImage( @Param('id', ParseUUIDPipe) id: string,@UploadedFile (
     new ParseFilePipe({
+        fileIsRequired: true,
         validators:[
             new MaxFileSizeValidator({
-                maxSize: 204800,
+                maxSize: 2048000,
                 message: 'Max file size is 200KB'
             }),
             new FileTypeValidator({
