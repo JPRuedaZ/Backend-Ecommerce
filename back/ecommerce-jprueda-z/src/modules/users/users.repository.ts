@@ -41,7 +41,7 @@ export class UsersRepository {
     } 
     if(user.password) {
         const hashedPassword = await bcrypt.hash(user.password, 10);
-        console.log(hashedPassword);
+        
         user = {...user, password: hashedPassword};
         await this.usersRepository.update({id: id}, {...user});
     } else {
@@ -55,8 +55,8 @@ export class UsersRepository {
     
   }
   async deleteUserById(id: string) : Promise <string> {
-    const deleteUser = await this.usersRepository.delete({id: id});
-    console.log(deleteUser);
+    await this.usersRepository.delete({id: id});
+    
     return `Se ha borrado el usuario : ${id}`;
 }
 }

@@ -21,10 +21,6 @@ export class AppService {
     
     await this.productsRepository.reset(),
     await this.categoriesService.addCategories(),
-    await this.productsRepository.addProducts(),
- 
-   
-  console.log('Reinicio y se agrego Preloaded data');
-  
+    await this.productsRepository.addProducts()
   }
 }

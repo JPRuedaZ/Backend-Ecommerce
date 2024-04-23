@@ -109,6 +109,6 @@ async reset(): Promise<void> {
  
   
 
-  console.log('Data reset successfully');
+  
 }
 }

@@ -43,8 +43,6 @@ export class OrdersService {
         
         
         await this.productsRepository.update({id: product.id}, {stock: product.stock - 1});
-        console.log(product.price);
-        console.log();
         return product; 
         }));
         const orderDetail = new OrderDetail();
