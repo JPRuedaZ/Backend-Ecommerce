@@ -70,6 +70,7 @@ export class CreateUserDto {
     @MaxLength(20)
     country: string;
 
+
     /**
      * @example 'Medellin'
      */

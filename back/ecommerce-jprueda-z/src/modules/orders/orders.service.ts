@@ -38,7 +38,9 @@ export class OrdersService {
 
         const productsArray = await Promise.all(products.map(async (elem) => {
             const product = await this.productsRepository.findOneBy({id: elem.id, stock: MoreThan(0)});
-            if(!product) throw new Error('Product not found');
+            if(!product) throw new NotFoundException('Product not found');
+
+            if(product.stock === 0) throw new NotFoundException('Product not available');
             total += Number(product.price);
         
         

@@ -19,7 +19,7 @@ const config = {
     autoLoadEntities: true,
     synchronize: true,
     logging: true,
-    dropSchema: true,
+    dropSchema: false,
     entities: [User, Product, Order, OrderDetail, Category],
     migrations: ['dist/migrations/*{.ts,.js}'],
 };

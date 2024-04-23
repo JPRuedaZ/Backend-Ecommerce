@@ -48,7 +48,7 @@ export class User {
         length: 50,
     })
     country: string
-    
+
     @Column({
         type: 'text',
     })
