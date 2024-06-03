@@ -20,7 +20,7 @@ export class PasswordRemoveInterceptor implements NestInterceptor {
             }),
         );
       }
-      //Este es un método privado que elimina los campos sensibles (password y confirmPassword) del objeto proporcionado.
+      //Este es un método privado que elimina los campos sensibles (password y confirmPassword) del objeto proporcionado. (Proteccion de datos devueltos al usuario en el front)
       private removePasswords(data: any): void {
         delete data.password;
         delete data.confirmPassword;
