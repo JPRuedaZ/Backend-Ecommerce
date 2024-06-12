@@ -18,6 +18,12 @@ export class Category {
     })
     name: string
 
+    @Column({
+        type: 'text',
+        nullable: false,
+    })
+    imgUrl: string
+
     //Relación 1:N con products.
     @OneToMany(() => Product, (product) => product.category)
     @JoinColumn()

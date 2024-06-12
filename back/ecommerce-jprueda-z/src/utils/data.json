@@ -5,7 +5,9 @@
     "price": 199.99,
     "stock": 12,
     "imgUrl": "https://d2ihpvt6nd5q28.cloudfront.net/wp-content/uploads/2023/12/iPhone15_Pink_PDP_Image_Position-1__MXLA.jpg",
-    "category": "smartphone"
+    "category": "smartphone",
+    "image-category":"https://img.freepik.com/fotos-premium/concepto-equilibrio-dispositivos-electronicos_23-2150422326.jpg"
+
   },
   {
     "name": "Samsung Galaxy S23",
@@ -13,7 +15,8 @@
     "price": 150.0,
     "stock": 12,
     "imgUrl": "https://images.start.com.ar/SM-S918BZKVARO-2.jpg",
-    "category": "smartphone"
+    "category": "smartphone",
+    "image-category":"https://img.freepik.com/fotos-premium/concepto-equilibrio-dispositivos-electronicos_23-2150422326.jpg"
   },
   {
     "name": "Motorola Edge 40",
@@ -21,7 +24,8 @@
     "price": 179.89,
     "stock": 12,
     "imgUrl": "https://images.fravega.com/f1000/e8b9fbbbd0bc9cfbd89147c91f7eba3f.jpg",
-    "category": "smartphone"
+    "category": "smartphone",
+    "image-category":"https://img.freepik.com/fotos-premium/concepto-equilibrio-dispositivos-electronicos_23-2150422326.jpg"
   },
   {
     "name": "Samsung Odyssey G9",
@@ -29,7 +33,8 @@
     "price": 299.99,
     "stock": 12,
     "imgUrl": "https://images.fravega.com/f1000/c6320328a79f21e1e1cdfbc2f0d694fc.jpg",
-    "category": "monitor"
+    "category": "monitor",
+    "image-category":"https://img.freepik.com/vector-gratis/monitor-lcd-pantalla-tv-plana-blanca-vacia-pantalla-blanco-tecnologia-digital-equipos-electronicos_1284-42804.jpg"
   },
   {
     "name": "LG UltraGear",
@@ -37,7 +42,8 @@
     "price": 199.99,
     "stock": 12,
     "imgUrl": "https://microsites-production-latam.s3.amazonaws.com/uploads/1693227846-3.jpg",
-    "category": "monitor"
+    "category": "monitor",
+    "image-category":"https://img.freepik.com/vector-gratis/monitor-lcd-pantalla-tv-plana-blanca-vacia-pantalla-blanco-tecnologia-digital-equipos-electronicos_1284-42804.jpg"
   },
   {
     "name": "Acer Predator",
@@ -45,7 +51,8 @@
     "price": 150.0,
     "stock": 12,
     "imgUrl": "https://i.ebayimg.com/images/g/VDQAAOSwFbdiuT3j/s-l1200.jpg",
-    "category": "monitor"
+    "category": "monitor",
+    "image-category":"https://img.freepik.com/vector-gratis/monitor-lcd-pantalla-tv-plana-blanca-vacia-pantalla-blanco-tecnologia-digital-equipos-electronicos_1284-42804.jpg"
   },
   {
     "name": "Razer BlackWidow V3",
@@ -53,7 +60,8 @@
     "price": 99.99,
     "stock": 12,
     "imgUrl": "https://front.dev.malditohard.com.ar/img/migration/TECLADO-GAMER-RAZER-BLACKWIDOW-V3-GREEN-SP.webp",
-    "category": "keyboard"
+    "category": "accessories",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-ilustracion-dibujos-animados-accesorios-telefono-movil-gafas-vr-modelo-3d-funda-telefonos-moviles-cargador-bateria-auriculares-reloj-inteligente-tarjeta-memoria-selfie-stick-tecnologia-concepto-telefono-inteligente_74855-23119.jpg"
   },
   {
     "name": "Corsair K70",
@@ -61,7 +69,8 @@
     "price": 79.99,
     "stock": 12,
     "imgUrl": "https://deventas.com/wp-content/uploads/2023/09/Diseno-sin-titulo-2023-11-03T001548.412.jpg",
-    "category": "keyboard"
+   "category": "accessories",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-ilustracion-dibujos-animados-accesorios-telefono-movil-gafas-vr-modelo-3d-funda-telefonos-moviles-cargador-bateria-auriculares-reloj-inteligente-tarjeta-memoria-selfie-stick-tecnologia-concepto-telefono-inteligente_74855-23119.jpg"
   },
   {
     "name": "Logitech G Pro",
@@ -69,7 +78,8 @@
     "price": 59.99,
     "stock": 12,
     "imgUrl": "https://promart.vteximg.com.br/arquivos/ids/4592347-1000-1000/image-fca1ec8a24324f18b6a9b48b63a6d422.jpg?v=637812687783130000",
-    "category": "keyboard"
+    "category": "accessories",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-ilustracion-dibujos-animados-accesorios-telefono-movil-gafas-vr-modelo-3d-funda-telefonos-moviles-cargador-bateria-auriculares-reloj-inteligente-tarjeta-memoria-selfie-stick-tecnologia-concepto-telefono-inteligente_74855-23119.jpg"
   },
   {
     "name": "Razer Viper",
@@ -77,7 +87,8 @@
     "price": 49.99,
     "stock": 12,
     "imgUrl": "https://aypcomputacion.com/wp-content/uploads/2022/02/2-24.jpg",
-    "category": "mouse"
+    "category": "accessories",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-ilustracion-dibujos-animados-accesorios-telefono-movil-gafas-vr-modelo-3d-funda-telefonos-moviles-cargador-bateria-auriculares-reloj-inteligente-tarjeta-memoria-selfie-stick-tecnologia-concepto-telefono-inteligente_74855-23119.jpg"
   },
   {
     "name": "Logitech G502 Pro",
@@ -85,7 +96,8 @@
     "price": 39.99,
     "stock": 12,
     "imgUrl": "https://i0.wp.com/hardcorecomputacion.com.ar/wp-content/uploads/2024/02/651851_432831_01_front_zoom.jpg?fit=1000%2C1000&ssl=1",
-    "category": "mouse"
+    "category": "mouse",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-ilustracion-dibujos-animados-accesorios-telefono-movil-gafas-vr-modelo-3d-funda-telefonos-moviles-cargador-bateria-auriculares-reloj-inteligente-tarjeta-memoria-selfie-stick-tecnologia-concepto-telefono-inteligente_74855-23119.jpg"
   },
   {
     "name": "SteelSeries Rival 3",
@@ -93,7 +105,32 @@
     "price": 29.99,
     "stock": 12,
     "imgUrl": "https://www.phi-digital.com/wp-content/uploads/2021/11/Mouse-PC-SteelSeries-Rival-52.jpg",
-    "category": "mouse"
-  }
+    "category": "accessories",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-ilustracion-dibujos-animados-accesorios-telefono-movil-gafas-vr-modelo-3d-funda-telefonos-moviles-cargador-bateria-auriculares-reloj-inteligente-tarjeta-memoria-selfie-stick-tecnologia-concepto-telefono-inteligente_74855-23119.jpg"
+  },
+  {"name": "MacBook Air",
+    "description": "Embrace efficiency and sophistication with the MacBook Air: lightweight design meets powerful performance, stunning Retina display brings your work to life, and all-day battery life keeps you productive wherever you go. Elevate your computing experience with the MacBook Air.",
+    "price": 999,
+    "stock": 10,
+    "imgUrl": "https://img.freepik.com/psd-premium/maqueta-portatil-isometrica_23-2150367253.jpg",
+    "category": "laptops",
+    "image-category":"https://img.freepik.com/fotos-premium/concepto-equilibrio-dispositivos-electronicos_23-2150422318.jpg"
+    },
+  {"name": "iPad Pro",
+    "description": "Unleash your creativity and productivity with the iPad Pro: powerful performance, stunning Liquid Retina display, and all-day battery life make the iPad Pro the perfect tool for work and play. Transform your ideas into reality with the iPad Pro.",
+    "price": 799,
+    "stock": 10,
+    "imgUrl": "https://img.freepik.com/psd-premium/maqueta-dispositivo-tableta_149660-860.jpg",
+    "category": "tablets",
+    "image-category":"https://img.freepik.com/psd-premium/maqueta-tablet-pro_165789-430.jpg"
+    },
+  {"name": "AirPods Pro",
+    "description": "Immerse yourself in sound with the AirPods Pro: active noise cancellation, transparency mode, and customizable fit make the AirPods Pro the perfect companion for music, calls, and everything in between. Elevate your audio experience with the AirPods Pro.",
+    "price": 249,
+    "stock": 10,
+    "imgUrl": "https://img.freepik.com/fotos-premium/aislado-apple-airpods-pro-disparo-aislado-que-muestra-ea-inalambrico-fondo-blanco-limpio_655090-801475.jpg",
+    "category": "headphones",
+    "image-category":"https://img.freepik.com/vector-gratis/conjunto-realista-diferentes-equipos-audio-cableados-e-inalambricos-telefonos-inteligentes-que-escuchan-musica-juegos-ilustracion-vectorial-aislada_1284-81532.jpg"
+    }
 ]
 

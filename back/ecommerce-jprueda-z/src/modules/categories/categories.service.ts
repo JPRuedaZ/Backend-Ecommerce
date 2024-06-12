@@ -22,7 +22,7 @@ export class CategoriesService {
                   .createQueryBuilder()
                   .insert()
                   .into(Category)
-                  .values({ name: product.category })
+                  .values({ name: product.category , imgUrl: product['image-category']})
                   .orIgnore(`("name") DO NOTHING`)
                   .execute();
               }),
