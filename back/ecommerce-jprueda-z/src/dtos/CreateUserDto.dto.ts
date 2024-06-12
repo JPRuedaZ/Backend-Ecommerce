@@ -1,5 +1,5 @@
 import { ApiHideProperty } from "@nestjs/swagger";
-import { IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsString, Matches, MaxLength, MinLength, Validate } from "class-validator";
+import { IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsString, Matches, Max, MaxLength, Min, MinLength, Validate } from "class-validator";
 import { confirmPasswords } from "src/decorators/confirmPasswords.decorator";
 
 
@@ -58,6 +58,8 @@ export class CreateUserDto {
      */
     @IsNotEmpty()
     @IsNumber()
+    @Min(100000)
+    @Max(999999999999999)
     phone: number;
 
     /**
