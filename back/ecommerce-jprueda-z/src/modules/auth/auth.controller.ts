@@ -16,6 +16,7 @@ export class AuthController {
         return this.authService.getAuth();
     }
     @Post('signin')
+    @UseInterceptors(PasswordRemoveInterceptor)
     signIn(@Body() credential: LoginUserDto) {
         return this.authService.signIn(credential);
     }

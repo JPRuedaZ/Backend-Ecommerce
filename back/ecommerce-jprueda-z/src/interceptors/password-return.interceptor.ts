@@ -13,7 +13,11 @@ export class PasswordRemoveInterceptor implements NestInterceptor {
                 });
               } else {
                 if (data && typeof data === 'object') {
-                  this.removePasswords(data); 
+                  if (data.user) {
+                    this.removePasswords(data.user);
+                } else {
+                    this.removePasswords(data);
+                }
                 }
               }
               return data;

@@ -28,12 +28,13 @@ export class AuthService {
            sub: userValidation.id,
            roles:[userValidation.isAdmin ? Role.ADMIN : Role.USER],
        }
+
        
        const token = this.jwtService.sign(payload)
 
        return {
         token,
-        message: 'Login Successful',
+        user: userValidation
        }
     }
     async signUp(user: Partial<User>) {
