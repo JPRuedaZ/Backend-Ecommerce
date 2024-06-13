@@ -5,6 +5,7 @@ import { User } from "src/entities/User.entity";
 @Injectable()
 export class UsersService {
     constructor(private usersRepository: UsersRepository){}
+
     getUsers(page: number, limit: number): Promise <Partial<User>[]> {
         return this.usersRepository.getUsers(page, limit);
     }

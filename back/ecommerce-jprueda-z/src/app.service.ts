@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CategoriesService } from './modules/categories/categories.service';
 import { ProductsRepository } from './modules/products/products.repository';
 
+
 @Injectable()
 export class AppService {
   constructor(

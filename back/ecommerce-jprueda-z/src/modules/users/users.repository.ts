@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersRepository {
     constructor(@InjectRepository(User) private usersRepository: Repository<User>) {}
+
     async getUsers(page: number, limit: number): Promise <Partial<User>[]> {
       let users = await this.usersRepository.find();
 
