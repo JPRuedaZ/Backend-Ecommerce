@@ -13,9 +13,8 @@ import { CreateProductDto } from "src/dtos/CreateProductDto.dto";
 export class ProductsController {
     constructor(private productsService: ProductsService) {}
 @Get()
-async getProducts(@Query('page') page:number=1, @Query('limit') limit:number=5): Promise <{ products: Product[], total: number }> {
-    const { products, total } = await this.productsService.getProducts(Number(page), Number(limit));
-    return { products, total };
+getProducts(@Query('page') page:number=1, @Query('limit') limit:number=5): Promise <{ products: Product[], total: number }> {
+    return this.productsService.getProducts(Number(page), Number(limit))
 }
 
 @Get('seeder')
