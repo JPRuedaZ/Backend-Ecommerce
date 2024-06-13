@@ -11,20 +11,20 @@ export class UsersService {
             {
                 name: 'Mauricio Jourdan',
                 email: 'maurojourdan@gmail.com',
-                password: 'password123*.', // asegúrate de hashear la contraseña en el repositorio
+                password: 'Password123*.', // asegúrate de hashear la contraseña en el repositorio
                 phone: 123456789,
                 country: 'Argentina',
-                address: '123 Main St',
-                city: 'New York',
+                address: '123 Mendoza St',
+                city: 'Buenos Aires',
                 isAdmin: true,
             },
             {
                 name: 'David Ramirez',
                 email: 'davidramirez@hotmail.com',
-                password: 'password123#.',
+                password: 'Contra123#.',
                 phone: 987654321,
                 country: 'Colombia',
-                address: '456 Main St',
+                address: '456 El Poblado St',
                 city: 'Medellin',
                 isAdmin: false,
             },
