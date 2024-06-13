@@ -20,7 +20,7 @@ export class Category {
 
     @Column({
         type: 'text',
-        nullable: false,
+        nullable: true,
     })
     imgUrl: string
 
