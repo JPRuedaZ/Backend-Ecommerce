@@ -8,6 +8,19 @@ import * as bcrypt from 'bcrypt';
 export class UsersRepository {
     constructor(@InjectRepository(User) private usersRepository: Repository<User>) {}
 
+    async preloadUser(user: Partial<User>): Promise<Partial<User>> {
+      const userFound = await this.usersRepository.findOneBy({email: user.email});
+      if(userFound) throw new BadRequestException(`User already exists`);
+      
+      // Hashear la contraseña antes de guardar
+      if (user.password) {
+          user.password = await bcrypt.hash(user.password, 10);
+      }
+
+      const newUser = await this.usersRepository.save(user);
+      return newUser;
+  }
+
     async getUsers(page: number, limit: number): Promise <Partial<User>[]> {
       let users = await this.usersRepository.find();
 
@@ -30,6 +43,9 @@ export class UsersRepository {
   async createUser(user: Partial<User>): Promise <Partial<User>> {
     const userFound = await this.usersRepository.findOneBy({email: user.email});
     if(userFound) throw new BadRequestException(`User already exists`);
+    if (user.password) {
+      user.password = await bcrypt.hash(user.password, 10);
+  }
     const newUser = await this.usersRepository.save(user);
     return newUser;
   }

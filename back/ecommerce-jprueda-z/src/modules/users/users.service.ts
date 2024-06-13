@@ -6,6 +6,39 @@ import { User } from "src/entities/User.entity";
 export class UsersService {
     constructor(private usersRepository: UsersRepository){}
 
+    async preLoadUsers(): Promise<void> {
+        const users: Partial<User>[] = [
+            {
+                name: 'Mauricio Jourdan',
+                email: 'maurojourdan@gmail.com',
+                password: 'password123*.', // asegúrate de hashear la contraseña en el repositorio
+                phone: 123456789,
+                country: 'Argentina',
+                address: '123 Main St',
+                city: 'New York',
+                isAdmin: true,
+            },
+            {
+                name: 'David Ramirez',
+                email: 'davidramirez@hotmail.com',
+                password: 'password123#.',
+                phone: 987654321,
+                country: 'Colombia',
+                address: '456 Main St',
+                city: 'Medellin',
+                isAdmin: false,
+            },
+        ];
+
+        for (const user of users) {
+            const existingUser = await this.usersRepository.getUserByEmail(user.email);
+            if (!existingUser) {
+                await this.usersRepository.createUser(user);
+            } else {
+                return;
+            }
+        }
+    }
     getUsers(page: number, limit: number): Promise <Partial<User>[]> {
         return this.usersRepository.getUsers(page, limit);
     }
