@@ -8,9 +8,11 @@ import { CreateProductDto } from "src/dtos/CreateProductDto.dto";
 export class ProductsService {
     
     constructor(private readonly productsRepository: ProductsRepository) {}
-    getProducts(page: number,limit: number): Promise<Product[]> {
-        return this.productsRepository.getproductsRepository(page, limit);
-    }
+    async getProducts(page: number, limit: number): Promise<{ products: Product[], total: number }> {
+        const products = await this.productsRepository.getproductsRepository(page, limit);
+        const total = await this.productsRepository.getTotalProducts();
+        return { products, total };
+      }
     getProductById(id: string): Promise<Product> {
         return this.productsRepository.getProductById(id);
     }

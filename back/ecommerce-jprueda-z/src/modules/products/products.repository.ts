@@ -1,7 +1,7 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Product } from "src/entities/Product.entity";
-import { Repository } from "typeorm";
+import { Not, Repository } from "typeorm";
 import * as data from '../../utils/data.json';
 import { Category } from 'src/entities/Category.entity';
 import { CreateProductDto } from "src/dtos/CreateProductDto.dto";
@@ -12,6 +12,14 @@ export class ProductsRepository {
     constructor( @InjectRepository(Product)private productsRepository: Repository<Product>,
   @InjectRepository(Category) private categoryRepository: Repository<Category>,
 @InjectRepository(Order) private orderRepository: Repository<Order>) {}
+async getTotalProducts(): Promise<number> {
+  const total = await this.productsRepository.count({
+    where: {
+      stock: Not(0)  // Filtrar productos con stock diferente de cero
+    }
+  });
+  return total;
+}
     async getproductsRepository(page: number,limit: number): Promise<Product[]> {
       let products = await this.productsRepository.find({
         relations: {
